@@ -7,7 +7,6 @@ services:
 
     container_name: deepu-fabricator-backend
 
-    # Internal only - Nginx ke through access hoga
     expose:
       - "8000"
 
@@ -23,11 +22,28 @@ services:
 
     restart: always
 
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+    networks:
+      - deepu-network
+
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "5"
+
 
 
   frontend:
@@ -37,20 +53,24 @@ services:
 
     container_name: deepu-fabricator-frontend
 
-    # Single entry URL
     ports:
       - "3000:80"
 
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
 
     restart: always
+
+    networks:
+      - deepu-network
 
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "5"
+
 
 
   db:
@@ -74,19 +94,18 @@ services:
         ]
 
       interval: 10s
-
       timeout: 5s
-
       retries: 5
 
     restart: always
 
+    networks:
+      - deepu-network
+
     logging:
       driver: "json-file"
-
       options:
         max-size: "10m"
-
         max-file: "5"
 
 
@@ -96,3 +115,10 @@ volumes:
   postgres_data:
 
   gallery_uploads:
+
+
+
+networks:
+
+  deepu-network:
+    driver: bridge
