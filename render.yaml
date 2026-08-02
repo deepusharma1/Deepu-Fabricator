@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: deepu-fabricator-backend
+    runtime: docker
+
+    plan: free
+
+    branch: main
+
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+
+    healthCheckPath: /health
+
+    envVars:
+      - key: APP_NAME
+        value: Deepu Fabricator API Portal
+
+      - key: APP_VERSION
+        value: 1.6.0
+
+      - key: ENVIRONMENT
+        value: production
+
+      - key: PORT
+        value: 8000
+
+      - key: DATABASE_URL
+        value: sqlite:///./deepu_fabricator.db
+
+      - key: SECRET_KEY
+        sync: false
+
+      - key: ALGORITHM
+        value: HS256
+
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 30
+
+      - key: REFRESH_TOKEN_EXPIRE_DAYS
+        value: 7
+
+      - key: ADMIN_USERNAME
+        value: admin
+
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
