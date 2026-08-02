@@ -1,0 +1,98 @@
+.why{
+    padding:100px 8%;
+    background:#111827;
+    color:white;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Heading aur cards container dono ko page middle-center rakhega */
+}
+
+.why-heading{
+    text-align:center;
+    margin-bottom:60px;
+    width: 100%;
+}
+
+.why-heading span{
+    color:#ff3b3b;
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+.why-heading h2{
+    font-size:42px;
+    margin:20px 0;
+}
+
+.why-heading p{
+    max-width:700px;
+    margin:auto;
+    line-height:28px;
+    color:#d1d5db;
+}
+
+/* 🚀 STRICT 2-COLUMN CENTRAL MATRIX ENGINE: 
+   Fractions value ko 2-2 cards par force karta hai aur block space center lock rakhta hai */
+.why-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) !important; /* Forces strictly 2 grid columns per row on desktop */
+    gap: 30px;
+    width: 100%;
+    max-width: 1000px; /* Bounding constraint grid wrapper taaki cards desktop par khiche huye na lagein */
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.why-card{
+    background:#1f2937;
+    border-radius:15px;
+    padding:35px;
+    text-align:center;
+    transition:.4s;
+    border:1px solid rgba(255,255,255,.05);
+    box-sizing: border-box;
+}
+
+.why-card:hover{
+    transform:translateY(-10px);
+    background:#ff3b3b;
+}
+
+.icon{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+.why-card h3{
+    margin-bottom:15px;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.why-card p{
+    line-height:28px;
+    color:#ddd;
+}
+
+.why-card:hover p{
+    color:white;
+}
+
+/* ==========================================================================
+   📱 RESPONSIVE ADJUSTMENT BREAK LOOPS (Auto shifts layout on narrow screens)
+   ========================================================================== */
+@media(max-width:768px){
+    .why-container {
+        grid-template-columns: 1fr !important; /* Single layout cascade on smaller phones/tablets */
+        max-width: 100%;
+    }
+    .why-heading h2{
+        font-size:30px;
+    }
+    .why-card {
+        padding: 25px 20px;
+    }
+}
+

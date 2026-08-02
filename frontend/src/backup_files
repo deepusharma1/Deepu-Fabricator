@@ -1,0 +1,271 @@
+import React, { useState, useEffect } from "react";
+import API from '../../api/axios';
+import {
+  Box,
+  Typography,
+  Paper,
+  Divider,
+  Button,
+  CircularProgress,
+  Badge,
+  TextField,
+  Card,
+  CardContent
+} from "@mui/material";
+import "./LiveInbox.css";
+
+function LiveInbox() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [loginError, setLoginError] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  const [messages, setMessages] = useState([]);
+  const [selectedMsg, setSelectedMsg] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchInboxMessages = async () => {
+    setLoading(true);
+    try {
+      const response = await API.get("/admin/queries");
+      if (result.status === "success") {
+        setMessages(result.data);
+        // 🚀 FIXED: Array ka pehla element fetch kiya data mapping crash se bachne ke liye
+        if (result.data && result.data.length > 0) {
+          setSelectedMsg(result.data[0]); 
+        } else {
+          setSelectedMsg(null);
+        }
+      }
+    } catch (error) {
+      console.error("Database connection error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchInboxMessages();
+    }
+  }, [isAuthenticated]);
+
+  const handleLoginChange = (e) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+    setLoginError("");
+  };
+
+  const handleAdminLoginSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoggingIn(true);
+    try {
+      const response = await API.post("/auth/login", loginData);
+      const data = response.data;
+
+      if (response.status === 200 && data.status === "success") {
+        setIsAuthenticated(true);
+      } else {
+        setLoginError(data.detail || "Invalid Username or Password.");
+      }
+    } catch (error) {
+      setLoginError("Could not connect to Python Server backend.");
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
+  const handleDeleteQuery = async (queryId) => {
+    const confirmDelete = window.confirm(`Are you sure you want to permanently delete Inquiry #${queryId}?`);
+    if (!confirmDelete) return;
+
+    try {
+      const response = await API.delete(`/admin/delete-query/${queryId}`);
+      const result = response.data;
+
+      if (response.status === 200 && result.status === "success") {
+        alert(typeof result.message === "object" ? JSON.stringify(result.message) : result.message);
+        fetchInboxMessages();
+      } else {
+        alert(typeof "Failed executing delete operational parameters." === "object" ? JSON.stringify("Failed executing delete operational parameters.") : "Failed executing delete operational parameters.");
+      }
+    } catch (error) {
+      alert(typeof "Could not reach Python database layer node router server." === "object" ? JSON.stringify("Could not reach Python database layer node router server.") : "Could not reach Python database layer node router server.");
+    }
+  };
+
+  const handleDownloadBackup = () => {
+    window.open("http://localhost:8000/api/admin/download-backup", "_blank");
+  };
+
+  // 🛡️ SHIELD INTERFACE PANEL
+  if (!isAuthenticated) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", py: 8, px: 2, background: "#fafafa", width: "100%" }}>
+        <Card sx={{ width: "100%", maxWidth: "420px", borderRadius: 3, boxShadow: "0 8px 30px rgba(0,0,0,0.08)" }}>
+          <CardContent sx={{ p: 4, textAlign: "center" }}>
+            <Typography variant="h5" fontWeight="bold" color="#222" sx={{ mb: 1 }}>
+              🔐 Admin Security Access
+            </Typography>
+            <Typography variant="body2" color="textSecondary" sx={{ mb: 4 }}>
+              Enter workspace credentials to view customer inquiries inbox.
+            </Typography>
+
+            <form onSubmit={handleAdminLoginSubmit}>
+              <TextField
+                fullWidth
+                label="Admin Username"
+                name="username"
+                value={loginData.username}
+                onChange={handleLoginChange}
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+                required
+              />
+              <TextField
+                fullWidth
+                type="password"
+                label="Security Password"
+                name="password"
+                value={loginData.password}
+                onChange={handleLoginChange}
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+                required
+              />
+              
+              {loginError && (
+                <Typography variant="caption" color="error" sx={{ display: "block", mt: 1, fontWeight: "600" }}>
+                  ⚠️ {loginError}
+                </Typography>
+              )}
+
+              <Button
+                fullWidth
+                type="submit"
+                disabled={isLoggingIn}
+                variant="contained"
+                sx={{
+                  mt: 3, py: 1.5, borderRadius: 2, fontWeight: "bold",
+                  backgroundColor: "#ff0000", "&:hover": { backgroundColor: "#cc0000" }
+                }}
+              >
+                {isLoggingIn ? "Authorizing..." : "Decrypt Inbox Feed"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </Box>
+    );
+  }
+
+  if (loading) {
+    return (
+      <Box className="inbox-loading" style={{ textAlign: "center", padding: "40px" }}>
+        <CircularProgress size={30} sx={{ color: "#ff0000" }} />
+        <Typography variant="body2" sx={{ ml: 2, mt: 1 }}>Syncing Live Workshop Inbox Ledger...</Typography>
+      </Box>
+    );
+  }
+
+  return (
+    <Box className="master-inbox-section">
+      <Box className="inbox-header-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+        <Typography variant="h5" fontWeight="bold">
+          📥 Real-Time Client Inquiry Inbox 
+          <Badge badgeContent={messages.length} color="error" sx={{ ml: 3 }} />
+        </Typography>
+        
+        <Box style={{ display: "flex", gap: "10px" }}>
+          <Button variant="contained" size="small" onClick={handleDownloadBackup} style={{ backgroundColor: "#222", fontWeight: "bold", textTransform: "none" }}>
+            📥 Download Excel Backup
+          </Button>
+          <Button variant="outlined" size="small" onClick={fetchInboxMessages} className="refresh-btn">
+            🔄 Refresh Feed
+          </Button>
+        </Box>
+      </Box>
+
+      <Box className="inbox-split-container">
+        {/* LEFT SIDEBAR */}
+        <Box className="inbox-sidebar-list">
+          {messages.length === 0 ? (
+            <Typography className="empty-notice" style={{ padding: '20px', color: '#888' }}>No active client messages received.</Typography>
+          ) : (
+            messages.map((msg) => (
+              <Box 
+                key={msg.id} 
+                className={`inbox-mail-card ${selectedMsg?.id === msg.id ? "active-mail" : ""}`}
+                onClick={() => setSelectedMsg(msg)}
+              >
+                <Box className="mail-card-header">
+                  <Typography variant="subtitle2" fontWeight="bold" className="client-name-text">
+                    {msg.full_name}
+                  </Typography>
+                  <Typography variant="caption" className="mail-date">
+                    {new Date(msg.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                  </Typography>
+                </Box>
+                <Typography variant="caption" className="category-badge-text">
+                  {msg.requirement_type}
+                </Typography>
+                <Typography variant="body2" className="mail-snippet">
+                  {msg.message}
+                </Typography>
+              </Box>
+            ))
+          )}
+        </Box>
+
+        {/* RIGHT SIDEBAR VIEW */}
+        <Box className="inbox-mail-body-view" component={Paper} elevation={0}>
+          {selectedMsg ? (
+            <Box className="mail-content-pad">
+              <Typography variant="h6" fontWeight="bold" color="#222222">
+                {selectedMsg.requirement_type} Job Request
+              </Typography>
+              <Divider sx={{ my: 1.5 }} />
+              
+              <Box className="meta-profile-block">
+                <Typography variant="body2"><b>From:</b> {selectedMsg.full_name} ({selectedMsg.email_address || "No Email Provided"})</Typography>
+                <Typography variant="body2"><b>Mobile Number:</b> <span className="phone-link-color">{selectedMsg.mobile_number}</span></Typography>
+                <Typography variant="caption" color="textSecondary">
+                  Received Timestamp: {new Date(selectedMsg.created_at).toLocaleString('en-IN')}
+                </Typography>
+              </Box>
+
+              <Divider sx={{ my: 2 }} />
+              <Typography variant="subtitle2" fontWeight="bold" sx={{ mb: 1, color: "#555555" }}>Inquiry Message Details:</Typography>
+              <Typography variant="body1" className="full-message-text-render">
+                {selectedMsg.message}
+              </Typography>
+              
+              <Box sx={{ mt: 4, display: "flex", gap: "15px" }}>
+                <a href={`tel:${selectedMsg.mobile_number}`} className="call-action-anchor-btn">
+                  📞 Call Customer
+                </a>
+                <Button 
+                  variant="outlined" 
+                  onClick={() => handleDeleteQuery(selectedMsg.id)}
+                  style={{ borderColor: "#ff3333", color: "#ff3333", fontWeight: "bold", textTransform: "none", padding: "0 20px", borderRadius: "6px" }}
+                >
+                  🗑️ Delete Inquiry
+                </Button>
+              </Box>
+            </Box>
+          ) : (
+            <Box style={{ padding: "40px", textAlign: "center" }}>
+              <Typography color="textSecondary">Select a message from the list to view details.</Typography>
+            </Box>
+          )}
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
+export default LiveInbox;
+
+
+

@@ -1,0 +1,99 @@
+.gallery-hero {
+    margin-top: var(--navbar-height);
+    min-height: clamp(400px, 70vh, 600px);
+    background: url("https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=80");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.gallery-hero .gallery-overlay {
+    width: 100%;
+    min-height: inherit;
+    background: rgba(17, 24, 39, .75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(2rem, 5vw, 4rem) var(--container-padding);
+}
+
+.gallery-content {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    color: #fff;
+}
+
+.gallery-content span {
+    color: #ff3b3b;
+    font-size: clamp(0.85rem, 1.5vw, 1.125rem);
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.gallery-content h1 {
+    font-size: clamp(1.75rem, 5vw, 3.75rem);
+    margin: clamp(1rem, 3vw, 1.5625rem) 0;
+    line-height: 1.2;
+}
+
+.gallery-content p {
+    font-size: clamp(0.95rem, 2vw, 1.25rem);
+    line-height: 1.7;
+    color: #ddd;
+    margin-bottom: clamp(1.5rem, 4vw, 2.8125rem);
+}
+
+.gallery-buttons {
+    display: flex;
+    justify-content: center;
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    flex-wrap: wrap;
+}
+
+.gallery-btn,
+.gallery-btn-outline {
+    padding: clamp(12px, 2vw, 16px) clamp(24px, 4vw, 38px);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    transition: .3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-btn {
+    background: #ff3b3b;
+    color: #fff;
+}
+
+.gallery-btn:hover {
+    background: #d62828;
+}
+
+.gallery-btn-outline {
+    border: 2px solid #fff;
+    color: #fff;
+}
+
+.gallery-btn-outline:hover {
+    background: #fff;
+    color: #111827;
+}
+
+@media (max-width: 480px) {
+    .gallery-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .gallery-btn,
+    .gallery-btn-outline {
+        width: 100%;
+    }
+}

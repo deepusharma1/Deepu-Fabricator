@@ -1,0 +1,190 @@
+/* ==========================================================================
+   SECTION 1: EXISTING MAIL INBOX UI COMPONENT GRAPHICS LAYOUT
+   ========================================================================== */
+.master-inbox-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+}
+
+.inbox-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f5f5f5;
+}
+
+.refresh-btn {
+  border-color: #ff0000 !important;
+  color: #ff0000 !important;
+  font-weight: bold !important;
+}
+
+.inbox-split-container {
+  display: flex;
+  height: 520px;
+  border: 1px solid #eef0f2;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Sidebar Mail list container styling */
+.inbox-sidebar-list {
+  width: 38%;
+  background-color: #fafbfc;
+  border-right: 1px solid #eef0f2;
+  overflow-y: auto;
+}
+
+.inbox-mail-card {
+  padding: 15px;
+  border-bottom: 1px solid #f1f3f5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.inbox-mail-card:hover {
+  background-color: #f4f5f7;
+}
+
+.active-mail {
+  background-color: #fff0f0 !important;
+  border-left: 2px solid #ff0000;
+}
+
+.mail-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.client-name-text {
+  color: #222222;
+}
+
+.mail-date {
+  color: #888888;
+}
+
+.category-badge-text {
+  display: inline-block;
+  color: #ff0000;
+  font-weight: 700;
+  margin: 3px 0 6px 0;
+}
+
+.mail-snippet {
+  color: #666666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mail Body full view container workspace panel */
+.inbox-mail-body-view {
+  width: 62%;
+  background: #ffffff;
+  overflow-y: auto;
+}
+
+.mail-content-pad {
+  padding: 25px;
+}
+
+.meta-profile-block p {
+  margin: 4px 0;
+  color: #444444;
+}
+
+.phone-link-color {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.full-message-text-render {
+  line-height: 1.6;
+  color: #333333;
+  background-color: #fbfbfb;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px dashed #e0e0e0;
+}
+
+.call-action-anchor-btn {
+  display: inline-block;
+  background-color: #ff0000;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 12px 25px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.2);
+}
+
+.no-select-placeholder, .inbox-loading {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   SECTION 2: 🔐 NEW SECURE LOGIN BOX ELEMENT COMPONENT ADD-ON STYLES
+   ========================================================================== */
+.MuiCard-root form .MuiTextField-root {
+  margin-bottom: 12px !important;
+}
+
+.MuiButton-root:disabled {
+  background-color: #e0e0e0 !important;
+  color: #888888 !important;
+}
+
+@media (max-width: 768px) {
+  .inbox-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .inbox-split-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .inbox-sidebar-list {
+    width: 100%;
+    max-height: 280px;
+    border-right: none;
+    border-bottom: 1px solid #eef0f2;
+  }
+
+  .inbox-mail-body-view {
+    width: 100%;
+    min-height: 300px;
+  }
+
+  .mail-content-pad {
+    padding: clamp(1rem, 3vw, 1.5625rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .master-inbox-section {
+    margin: 20px var(--container-padding);
+    padding: 15px;
+  }
+}
+
+.empty-notice {
+  text-align: center;
+  padding: 30px 15px;
+  color: #888888;
+  font-size: 0.9rem;
+}

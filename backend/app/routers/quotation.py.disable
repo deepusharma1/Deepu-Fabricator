@@ -1,0 +1,268 @@
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    status
+)
+
+from sqlalchemy.orm import Session
+
+from app.database.connection import get_db
+
+from app.schemas.quotation import (
+    QuotationCreate,
+    QuotationResponse,
+    QuotationUpdate
+)
+
+from app.services.quotation_service import (
+    QuotationService
+)
+
+
+router = APIRouter(
+
+    prefix="/quotation",
+
+    tags=["Quotation"]
+
+)
+
+
+
+# =====================================================
+# CREATE QUOTATION
+# POST /api/v1/quotation/
+# =====================================================
+
+@router.post(
+    "/",
+    response_model=QuotationResponse,
+    status_code=status.HTTP_201_CREATED
+)
+def create_quotation(
+
+    payload: QuotationCreate,
+
+    db: Session = Depends(get_db)
+
+):
+
+    try:
+
+        return QuotationService.save_quotation(
+
+            db,
+
+            payload
+
+        )
+
+
+    except Exception as error:
+
+        raise HTTPException(
+
+            status_code=500,
+
+            detail=str(error)
+
+        )
+
+
+
+
+
+# =====================================================
+# GET ALL QUOTATIONS
+# GET /api/v1/quotation/
+# =====================================================
+
+@router.get(
+
+    "/",
+
+    response_model=list[QuotationResponse],
+
+    status_code=status.HTTP_200_OK
+
+)
+def get_all_quotations(
+
+    db: Session = Depends(get_db)
+
+):
+
+    try:
+
+        return QuotationService.get_all_quotations(
+
+            db
+
+        )
+
+
+    except Exception as error:
+
+        raise HTTPException(
+
+            status_code=500,
+
+            detail=str(error)
+
+        )
+
+
+
+
+
+
+# =====================================================
+# GET SINGLE QUOTATION
+# GET /api/v1/quotation/{id}
+# =====================================================
+
+@router.get(
+
+    "/{quotation_id}",
+
+    response_model=QuotationResponse,
+
+    status_code=status.HTTP_200_OK
+
+)
+def get_quotation_by_id(
+
+    quotation_id: int,
+
+    db: Session = Depends(get_db)
+
+):
+
+    quotation = QuotationService.get_quotation_by_id(
+
+        db,
+
+        quotation_id
+
+    )
+
+
+    if not quotation:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Quotation not found"
+
+        )
+
+
+    return quotation
+
+
+
+
+
+
+# =====================================================
+# UPDATE QUOTATION
+# PUT /api/v1/quotation/{id}
+# =====================================================
+
+@router.put(
+
+    "/{quotation_id}",
+
+    response_model=QuotationResponse,
+
+    status_code=status.HTTP_200_OK
+
+)
+def update_quotation(
+
+    quotation_id: int,
+
+    payload: QuotationUpdate,
+
+    db: Session = Depends(get_db)
+
+):
+
+    quotation = QuotationService.update_quotation(
+
+        db,
+
+        quotation_id,
+
+        payload
+
+    )
+
+
+    if not quotation:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Quotation not found"
+
+        )
+
+
+    return quotation
+
+
+
+
+
+
+# =====================================================
+# DELETE QUOTATION
+# DELETE /api/v1/quotation/{id}
+# Soft Delete
+# =====================================================
+
+@router.delete(
+
+    "/{quotation_id}",
+
+    status_code=status.HTTP_200_OK
+
+)
+def delete_quotation(
+
+    quotation_id: int,
+
+    db: Session = Depends(get_db)
+
+):
+
+    result = QuotationService.delete_quotation(
+
+        db,
+
+        quotation_id
+
+    )
+
+
+    if not result:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Quotation not found"
+
+        )
+
+
+    return {
+
+        "message":
+        "Quotation deleted successfully"
+
+    }

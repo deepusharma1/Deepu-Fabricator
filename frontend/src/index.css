@@ -1,0 +1,399 @@
+/* Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+
+:root {
+
+  /* Colors */
+  --primary-color:#ff3b3b;
+  --primary-hover:#d62828;
+  --secondary-color:#111827;
+
+  --bg-white:#ffffff;
+  --bg-light:#f9fafb;
+
+  --text-dark:#111827;
+  --text-gray:#4b5563;
+  --text-light:#9ca3af;
+
+  --white:#ffffff;
+
+
+  /* Layout */
+  --navbar-height:80px;
+  --navbar-height-scrolled:70px;
+
+  --container-max:1280px;
+  --container-padding:5%;
+
+
+  /* Shadows */
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+
+  --shadow-md:
+  0 4px 6px rgba(0,0,0,.1),
+  0 2px 4px rgba(0,0,0,.06);
+
+  --shadow-lg:
+  0 10px 15px rgba(0,0,0,.1),
+  0 4px 6px rgba(0,0,0,.05);
+
+
+  /* Transition */
+  --transition:all .3s ease;
+
+
+  /* Section */
+  --section-padding:clamp(50px,8vw,80px) 0;
+
+}
+
+
+/* =====================
+   RESET
+===================== */
+
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+
+html{
+
+  scroll-behavior:smooth;
+  overflow-x:hidden;
+
+}
+
+
+body,
+#root{
+
+  width:100%;
+  min-height:100%;
+
+}
+
+
+body{
+
+  font-family:"Poppins",sans-serif;
+
+  background:var(--bg-white);
+
+  color:var(--text-dark);
+
+  line-height:1.6;
+
+  overflow-x:hidden;
+
+  -webkit-font-smoothing:antialiased;
+
+}
+
+
+
+/* Links */
+
+a{
+
+  text-decoration:none;
+
+  color:inherit;
+
+  transition:var(--transition);
+
+}
+
+
+
+ul,
+ol{
+
+  list-style:none;
+
+}
+
+
+
+/* Images */
+
+img{
+
+  width:100%;
+
+  max-width:100%;
+
+  height:auto;
+
+  display:block;
+
+  object-fit:cover;
+
+}
+
+
+
+/* Form */
+
+button,
+input,
+textarea,
+select{
+
+  font-family:inherit;
+
+  outline:none;
+
+}
+
+
+
+button{
+
+  cursor:pointer;
+
+  border:none;
+
+}
+
+
+
+/* Sections */
+
+section{
+
+  width:100%;
+
+  padding:var(--section-padding);
+
+  overflow:hidden;
+
+  scroll-margin-top:var(--navbar-height);
+
+}
+
+
+
+/* Container */
+
+
+.container{
+
+  width:100%;
+
+  max-width:var(--container-max);
+
+  margin:auto;
+
+  padding-left:var(--container-padding);
+
+  padding-right:var(--container-padding);
+
+}
+
+
+
+
+/* =====================
+   RESPONSIVE ROOT
+===================== */
+
+
+@media(max-width:1024px){
+
+  :root{
+
+    --container-padding:4%;
+
+  }
+
+}
+
+
+
+@media(max-width:768px){
+
+
+  :root{
+
+    --navbar-height:70px;
+
+    --container-padding:4%;
+
+  }
+
+
+}
+
+
+
+@media(max-width:480px){
+
+
+  :root{
+
+    --container-padding:16px;
+
+  }
+
+
+}
+
+
+
+
+/* =====================
+   TYPOGRAPHY
+===================== */
+
+
+.section-title{
+
+  font-size:clamp(1.7rem,4vw,2.5rem);
+
+  font-weight:800;
+
+  text-align:center;
+
+  margin-bottom:1rem;
+
+}
+
+
+
+.section-subtitle{
+
+  color:var(--primary-color);
+
+  font-weight:700;
+
+  text-transform:uppercase;
+
+  letter-spacing:2px;
+
+  font-size:.9rem;
+
+  text-align:center;
+
+  display:block;
+
+}
+
+
+
+/* =====================
+ BUTTONS
+===================== */
+
+
+.primary-btn{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:var(--primary-color);
+
+  color:white;
+
+  padding:14px 32px;
+
+  border-radius:8px;
+
+  font-weight:600;
+
+  transition:var(--transition);
+
+  box-shadow:var(--shadow-md);
+
+}
+
+
+
+.primary-btn:hover{
+
+  background:var(--primary-hover);
+
+  transform:translateY(-2px);
+
+}
+
+
+
+.secondary-btn{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border:2px solid var(--primary-color);
+
+  color:var(--primary-color);
+
+  padding:12px 30px;
+
+  border-radius:8px;
+
+  font-weight:600;
+
+}
+
+
+
+.secondary-btn:hover{
+
+  background:var(--primary-color);
+
+  color:white;
+
+}
+
+
+
+
+/* =====================
+ GRID
+===================== */
+
+
+.grid-responsive{
+
+  display:grid;
+
+  gap:2rem;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(280px,1fr));
+
+}
+
+
+
+@media(max-width:480px){
+
+.grid-responsive{
+
+ grid-template-columns:1fr;
+
+}
+
+}
+
+
+
+
+/* Mobile Menu Lock */
+
+body.nav-open{
+
+ overflow:hidden;
+
+}

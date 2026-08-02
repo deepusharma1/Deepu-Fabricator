@@ -1,0 +1,98 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+    container_name: deepu-fabricator-backend
+
+    # Internal only - Nginx ke through access hoga
+    expose:
+      - "8000"
+
+    env_file:
+      - ./backend/.env
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    volumes:
+      - gallery_uploads:/workspace/static/uploads/gallery
+
+    restart: always
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    container_name: deepu-fabricator-frontend
+
+    # Single entry URL
+    ports:
+      - "3000:80"
+
+    depends_on:
+      - backend
+
+    restart: always
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+
+  db:
+    image: postgres:16-alpine
+
+    container_name: deepu-fabricator-db
+
+    environment:
+      POSTGRES_USER: deepu_user
+      POSTGRES_PASSWORD: deepu_password
+      POSTGRES_DB: deepu_fabricator
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U deepu_user -d deepu_fabricator"
+        ]
+
+      interval: 10s
+
+      timeout: 5s
+
+      retries: 5
+
+    restart: always
+
+    logging:
+      driver: "json-file"
+
+      options:
+        max-size: "10m"
+
+        max-file: "5"
+
+
+
+volumes:
+
+  postgres_data:
+
+  gallery_uploads:

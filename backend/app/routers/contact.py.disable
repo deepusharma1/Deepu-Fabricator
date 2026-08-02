@@ -1,0 +1,80 @@
+
+"""
+====================================================
+DISABLED FILE
+OLD CONTACT ROUTER
+
+ACTIVE ROUTER LOCATION:
+app/api/contact.py
+
+DO NOT USE THIS FILE
+====================================================
+"""
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    status
+)
+
+from sqlalchemy.orm import Session
+
+
+from app.database.connection import get_db
+
+
+from app.schemas.contact import (
+    ContactCreate,
+    ContactResponse
+)
+
+
+from app.services.contact_service import ContactService
+
+
+
+router = APIRouter(
+
+    prefix="/contact",
+
+    tags=["Contact"]
+
+)
+
+
+
+
+@router.post(
+    "/",
+    response_model=ContactResponse,
+    status_code=status.HTTP_201_CREATED
+)
+def create_contact(
+
+    payload: ContactCreate,
+
+    db: Session = Depends(get_db)
+
+):
+
+    try:
+
+        return ContactService.save_message(
+
+            db,
+
+            payload
+
+        )
+
+
+    except Exception as error:
+
+
+        raise HTTPException(
+
+            status_code=500,
+
+            detail=str(error)
+
+        )

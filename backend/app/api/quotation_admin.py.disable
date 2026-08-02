@@ -1,0 +1,372 @@
+"""
+DISABLED FILE
+
+Quotation Admin APIs are handled inside:
+app/api/admin.py
+
+Do not use this file
+"""
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    status
+)
+
+from sqlalchemy.orm import Session
+
+
+from app.database.connection import get_db
+
+from app.models.quotation import QuotationModel
+
+from app.utils.dependencies import get_current_admin
+
+
+
+router = APIRouter(
+
+    prefix="/admin/quotation",
+
+    tags=[
+
+        "Quotation Management"
+
+    ]
+
+)
+
+
+
+
+
+# =====================================================
+# UPDATE QUOTATION STATUS
+# PATCH /api/v1/admin/quotation/{id}/status
+# =====================================================
+
+
+@router.patch("/{quotation_id}/status")
+def update_quotation_status(
+
+    quotation_id:int,
+
+    quotation_status:str,
+
+    db:Session=Depends(get_db),
+
+    admin=Depends(get_current_admin)
+
+):
+
+
+    allowed_status=[
+
+        "Pending",
+
+        "Approved",
+
+        "Rejected",
+
+        "Completed"
+
+    ]
+
+
+
+    if quotation_status not in allowed_status:
+
+
+        raise HTTPException(
+
+            status_code=400,
+
+            detail="Invalid quotation status"
+
+        )
+
+
+
+    quotation=(
+
+        db.query(QuotationModel)
+
+        .filter(
+
+            QuotationModel.id==quotation_id
+
+        )
+
+        .first()
+
+    )
+
+
+
+    if not quotation:
+
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Quotation not found"
+
+        )
+
+
+
+
+    if quotation.is_locked:
+
+
+        raise HTTPException(
+
+            status_code=400,
+
+            detail="Quotation is locked"
+
+        )
+
+
+
+
+    quotation.status = quotation_status
+
+
+
+    db.commit()
+
+
+
+    return {
+
+
+        "status":"success",
+
+        "message":
+
+        "Quotation status updated"
+
+    }
+
+
+
+
+
+
+
+
+
+# =====================================================
+# LOCK QUOTATION
+# PATCH /api/v1/admin/quotation/{id}/lock
+# =====================================================
+
+
+@router.patch("/{quotation_id}/lock")
+def lock_quotation(
+
+    quotation_id:int,
+
+    db:Session=Depends(get_db),
+
+    admin=Depends(get_current_admin)
+
+):
+
+
+    quotation=(
+
+        db.query(QuotationModel)
+
+        .filter(
+
+            QuotationModel.id==quotation_id
+
+        )
+
+        .first()
+
+    )
+
+
+
+    if not quotation:
+
+
+        raise HTTPException(
+
+            404,
+
+            "Quotation not found"
+
+        )
+
+
+
+    quotation.is_locked=True
+
+
+
+    db.commit()
+
+
+
+    return {
+
+
+        "status":"success",
+
+        "message":
+
+        "Quotation locked successfully"
+
+    }
+
+
+
+
+
+
+
+
+# =====================================================
+# UNLOCK QUOTATION
+# PATCH /api/v1/admin/quotation/{id}/unlock
+# =====================================================
+
+
+@router.patch("/{quotation_id}/unlock")
+def unlock_quotation(
+
+    quotation_id:int,
+
+    db:Session=Depends(get_db),
+
+    admin=Depends(get_current_admin)
+
+):
+
+
+    quotation=(
+
+        db.query(QuotationModel)
+
+        .filter(
+
+            QuotationModel.id==quotation_id
+
+        )
+
+        .first()
+
+    )
+
+
+
+    if not quotation:
+
+
+        raise HTTPException(
+
+            404,
+
+            "Quotation not found"
+
+        )
+
+
+
+    quotation.is_locked=False
+
+
+
+    db.commit()
+
+
+
+    return {
+
+
+        "status":"success",
+
+        "message":
+
+        "Quotation unlocked successfully"
+
+    }
+
+
+
+
+
+
+
+
+# =====================================================
+# DELETE QUOTATION
+# DELETE /api/v1/admin/quotation/{id}
+# =====================================================
+
+
+@router.delete("/{quotation_id}")
+def delete_quotation(
+
+    quotation_id:int,
+
+    db:Session=Depends(get_db),
+
+    admin=Depends(get_current_admin)
+
+):
+
+
+    quotation=(
+
+        db.query(QuotationModel)
+
+        .filter(
+
+            QuotationModel.id==quotation_id
+
+        )
+
+        .first()
+
+    )
+
+
+
+    if not quotation:
+
+
+        raise HTTPException(
+
+            404,
+
+            "Quotation not found"
+
+        )
+
+
+
+
+    quotation.is_deleted=True
+
+
+
+    db.commit()
+
+
+
+    return {
+
+
+        "status":"success",
+
+        "message":
+
+        "Quotation deleted successfully"
+
+    }

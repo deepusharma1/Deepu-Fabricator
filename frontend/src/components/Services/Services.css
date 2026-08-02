@@ -1,0 +1,492 @@
+.services {
+    background: var(--bg-light, #f9fafb);
+    padding: clamp(40px, 8vw, 90px) 0;
+}
+
+
+/* =====================
+ HEADER
+===================== */
+
+.section-header {
+
+    text-align:center;
+
+    max-width:850px;
+
+    margin:0 auto clamp(35px,6vw,60px);
+
+    padding:0 15px;
+
+}
+
+
+.section-subtitle {
+
+    display:inline-block;
+
+    color:#ff3b3b;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    margin-bottom:12px;
+
+}
+
+
+.section-title {
+
+    color:#111827;
+
+    font-size:clamp(26px,4vw,40px);
+
+    font-weight:800;
+
+    line-height:1.25;
+
+    margin-bottom:18px;
+
+}
+
+
+.section-desc {
+
+    color:#6b7280;
+
+    font-size:clamp(15px,2vw,18px);
+
+    line-height:1.8;
+
+    margin:auto;
+
+}
+
+
+
+/* =====================
+ SERVICE GRID
+===================== */
+
+
+.service-grid {
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:0 20px;
+
+}
+
+
+
+
+/* =====================
+ CARD
+===================== */
+
+
+.service-card {
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:35px 25px;
+
+    text-align:center;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    min-height:380px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+
+
+.service-card:hover {
+
+    transform:translateY(-8px);
+
+}
+
+
+
+.service-icon {
+
+
+    width:75px;
+
+    height:75px;
+
+    border-radius:50%;
+
+    background:rgba(255,59,59,.1);
+
+    color:#ff3b3b;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:32px;
+
+    margin-bottom:25px;
+
+    transition:.3s;
+
+}
+
+
+
+.service-card:hover .service-icon {
+
+    background:#ff3b3b;
+
+    color:white;
+
+}
+
+
+
+.service-card h3 {
+
+
+    font-size:21px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.service-card p {
+
+
+    color:#6b7280;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+    flex-grow:1;
+
+}
+
+
+
+
+/* BUTTON */
+
+
+.service-btn {
+
+
+    margin-top:20px;
+
+    padding:11px 30px;
+
+    border-radius:8px;
+
+    border:2px solid #ff3b3b;
+
+    background:white;
+
+    color:#ff3b3b;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+.service-btn:hover {
+
+
+    background:#ff3b3b;
+
+    color:white;
+
+}
+
+
+
+
+
+/* =====================
+ QUOTATION PANEL
+===================== */
+
+
+.quotation-lock {
+
+
+    max-width:650px;
+
+    margin:60px auto 0;
+
+    background:white;
+
+    padding:35px 25px;
+
+    border-radius:16px;
+
+    text-align:center;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+
+
+.lock-icon,
+.quote-icon {
+
+    font-size:45px;
+
+    color:#ff3b3b;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.quotation-lock h3 {
+
+
+    font-size:24px;
+
+    margin-bottom:12px;
+
+    color:#111827;
+
+}
+
+
+
+.quotation-lock p {
+
+
+    color:#6b7280;
+
+    line-height:1.7;
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+
+.admin-btn {
+
+
+    background:#ff3b3b;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 30px;
+
+    border-radius:8px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+
+
+.admin-btn:hover {
+
+    background:#d62828;
+
+}
+
+
+
+
+
+/* LOGIN */
+
+
+.login-box {
+
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.login-box input {
+
+
+    width:260px;
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+}
+
+
+
+.login-box button {
+
+
+    background:#111827;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 25px;
+
+    border-radius:8px;
+
+}
+
+
+
+
+
+/* =====================
+ TABLET
+===================== */
+
+
+@media(max-width:1024px){
+
+
+.service-grid {
+
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+
+
+/* =====================
+ MOBILE
+===================== */
+
+
+@media(max-width:600px){
+
+
+.services {
+
+    padding:40px 0;
+
+}
+
+
+
+.service-grid {
+
+
+    grid-template-columns:1fr;
+
+    padding:0 15px;
+
+}
+
+
+
+.service-card {
+
+
+    min-height:auto;
+
+    padding:30px 20px;
+
+}
+
+
+
+.section-title {
+
+    font-size:28px;
+
+}
+
+
+
+.quotation-lock {
+
+
+    margin:40px 15px 0;
+
+    padding:25px 15px;
+
+}
+
+
+
+.login-box {
+
+
+    flex-direction:column;
+
+}
+
+
+
+.login-box input,
+.login-box button,
+.admin-btn {
+
+
+    width:100%;
+
+}
+
+
+}

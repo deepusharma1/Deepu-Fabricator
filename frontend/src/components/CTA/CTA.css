@@ -1,0 +1,87 @@
+.cta {
+    background: url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80") center center/cover no-repeat;
+    padding: clamp(3rem, 8vw, 7.5rem) var(--container-padding);
+    position: relative;
+}
+
+.cta-overlay {
+    background: rgba(0, 0, 0, .70);
+    padding: clamp(2rem, 6vw, 5rem);
+    border-radius: clamp(12px, 2vw, 20px);
+    max-width: 1100px;
+    margin-inline: auto;
+}
+
+.cta-content {
+    text-align: center;
+    color: white;
+}
+
+.cta-content span {
+    color: #ff3b3b;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+}
+
+.cta-content h2 {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    margin: clamp(1rem, 3vw, 1.5625rem) 0;
+    line-height: 1.2;
+}
+
+.cta-content p {
+    max-width: 750px;
+    margin: 0 auto clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.7;
+    color: #ddd;
+    font-size: clamp(0.95rem, 1.5vw, 1.125rem);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    flex-wrap: wrap;
+}
+
+.btn {
+    text-decoration: none;
+    color: white;
+    padding: clamp(12px, 2vw, 15px) clamp(20px, 3vw, 35px);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    transition: .3s;
+}
+
+.phone {
+    background: #ff3b3b;
+}
+
+.whatsapp {
+    background: #25D366;
+}
+
+.email {
+    background: #111827;
+}
+
+.btn:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 480px) {
+    .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

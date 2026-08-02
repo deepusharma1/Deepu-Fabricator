@@ -1,0 +1,335 @@
+.contact-hero {
+
+    margin-top: var(--navbar-height);
+
+    min-height: clamp(320px,60vh,520px);
+
+    background-image:
+    url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    display:flex;
+
+    align-items:center;
+
+    position:relative;
+
+}
+
+
+
+.contact-overlay{
+
+    width:100%;
+
+    min-height:inherit;
+
+    background:
+    rgba(17,24,39,.80);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:
+
+    clamp(2rem,6vw,5rem)
+
+    var(--container-padding);
+
+}
+
+
+
+
+
+.contact-content{
+
+    width:100%;
+
+    max-width:950px;
+
+    text-align:center;
+
+    color:white;
+
+}
+
+
+
+
+
+.contact-content span{
+
+    color:var(--primary-color);
+
+    font-weight:700;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    font-size:
+
+    clamp(.75rem,2vw,.95rem);
+
+}
+
+
+
+
+
+.contact-content h1{
+
+    font-size:
+
+    clamp(2rem,6vw,3.8rem);
+
+    font-weight:800;
+
+    line-height:1.15;
+
+    margin:
+
+    15px 0;
+
+}
+
+
+
+
+
+.contact-content p{
+
+    max-width:750px;
+
+    margin:0 auto 35px;
+
+    color:#e5e7eb;
+
+    font-size:
+
+    clamp(.9rem,2vw,1.2rem);
+
+    line-height:1.7;
+
+}
+
+
+
+
+
+
+.contact-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+
+
+
+.contact-btn,
+.contact-btn-outline{
+
+
+    min-width:170px;
+
+    padding:
+
+    14px 32px;
+
+
+    border-radius:8px;
+
+    font-weight:700;
+
+    font-size:1rem;
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transition:.3s;
+
+}
+
+
+
+
+
+.contact-btn{
+
+    background:var(--primary-color);
+
+    color:white;
+
+}
+
+
+
+
+
+.contact-btn:hover{
+
+    background:var(--primary-hover);
+
+    transform:translateY(-3px);
+
+}
+
+
+
+
+
+.contact-btn-outline{
+
+
+    border:2px solid white;
+
+    color:white;
+
+}
+
+
+
+
+
+.contact-btn-outline:hover{
+
+
+    background:white;
+
+    color:var(--secondary-color);
+
+    transform:translateY(-3px);
+
+}
+
+
+
+
+
+
+/* Tablet */
+
+@media(max-width:991px){
+
+
+.contact-hero{
+
+    min-height:420px;
+
+}
+
+
+.contact-content{
+
+    max-width:750px;
+
+}
+
+
+}
+
+
+
+
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+
+.contact-hero{
+
+    min-height:380px;
+
+    background-position:center;
+
+}
+
+
+
+.contact-overlay{
+
+    padding-top:40px;
+
+    padding-bottom:40px;
+
+}
+
+
+
+.contact-content h1{
+
+    font-size:2rem;
+
+}
+
+
+.contact-buttons{
+
+    flex-direction:column;
+
+    width:100%;
+
+}
+
+
+
+.contact-btn,
+.contact-btn-outline{
+
+    width:100%;
+
+}
+
+
+}
+
+
+
+
+
+
+/* Small Mobile */
+
+@media(max-width:400px){
+
+
+.contact-content h1{
+
+    font-size:1.7rem;
+
+}
+
+
+.contact-content p{
+
+    font-size:.9rem;
+
+}
+
+
+}

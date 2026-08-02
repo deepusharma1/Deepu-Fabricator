@@ -1,0 +1,128 @@
+# ==================================================
+# Deepu Fabricator Production .gitignore
+# ==================================================
+
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+!.env.example
+
+
+# =========================
+# Python Cache
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# =========================
+# Python Virtual Environment
+# =========================
+.venv/
+venv/
+env/
+
+
+# =========================
+# Database Files
+# =========================
+*.db
+*.sqlite
+*.sqlite3
+
+
+# =========================
+# Upload / Media Files
+# =========================
+static/uploads/
+uploads/
+
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+
+# =========================
+# Backend Generated Files
+# =========================
+*.pyc
+*.pyo
+
+test_*.pdf
+*_test.pdf
+quotation_test.pdf
+test_pdf.pdf
+test_quotation.pdf
+
+
+# =========================
+# Frontend Dependencies
+# =========================
+node_modules/
+dist/
+build/
+
+
+# =========================
+# AI / Development Tools
+# =========================
+.gemini/
+
+
+# =========================
+# Backup Files
+# =========================
+backup_old/
+*_backup*
+backup/database/*.sql
+
+
+# =========================
+# Compressed Files
+# =========================
+*.zip
+*.tar
+*.tar.gz
+
+
+# =========================
+# IDE Settings
+# =========================
+.vscode/
+.idea/
+
+
+# =========================
+# Operating System Files
+# =========================
+.DS_Store
+Thumbs.db
+
+
+# =========================
+# Docker Local Override
+# =========================
+docker-compose.override.yml
+
+
+# =========================
+# Coverage / Testing
+# =========================
+.coverage
+htmlcov/
+.pytest_cache/
+
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp
+*.swp
